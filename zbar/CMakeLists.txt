@@ -203,18 +203,20 @@ else()
 endif()
 
 if(WIN32)
-    if(${CMAKE_GENERATOR_PLATFORM} STREQUAL "x64")
+
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
         install(TARGETS ${LZBAR}    LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}/x64"
-                                    ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/x64"
-                                    RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/bin"
-                                    COMPONENT library
-        )
-    else()
+                ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/x64"
+                RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/bin"
+                COMPONENT library
+                )
+    elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
+        # 32 bits
         install(TARGETS ${LZBAR}    LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}/win32"
-                                    ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/win32"
-                                    RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/bin"
-                                    COMPONENT library
-        )
+                ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/win32"
+                RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/bin"
+                COMPONENT library
+                )
     endif()
 else()
     install(TARGETS ${LZBAR} DESTINATION ${CMAKE_INSTALL_PREFIX})
